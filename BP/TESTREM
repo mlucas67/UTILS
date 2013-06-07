@@ -1,0 +1,23 @@
+program testrem
+    
+    string = "a bunch of characters" : char(0) : "Some more characters"
+    rdr = object("Reader", string)
+    loop
+        ch = rdr->read()
+    until status()
+        crt ch : ", " :
+    repeat
+    crt
+    crt "Pointer = " : rdr->getPtr()
+    crt "Length  = " : len(string)
+    for i = 1 to 10
+        rdr->unread()
+    next i
+    loop
+        ch = rdr->read()
+    until status()
+        crt seq(ch) : ", " :
+    repeat
+    crt
+    
+end

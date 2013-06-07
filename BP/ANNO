@@ -1,0 +1,6 @@
+program anno
+
+    call !findprog(result, "Test")
+    crt result
+
+end

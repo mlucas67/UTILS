@@ -1,0 +1,11 @@
+$catalog trycatch2 local
+subroutine trycatch2
+    try 
+        call trycatch3
+    catch "CatchMeIfYouCan"
+        crt "(trycatch2 caught: CatchMeIfYouCan) I'm really fast, you know."
+    catch SYS$UNHANDLED
+        crt "(trycatch2 caught: " : @EXCEPTION : " via a SYS$UNHANDLED) Where'd that come from?"
+    end
+    return
+end

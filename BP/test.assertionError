@@ -1,0 +1,10 @@
+program test.assertionError
+
+    try
+        throw "AssertionError", "Test of AssertionError"
+    catch "AssertionError"
+        assertionError = object(@EXCEPTION, @EXCEPTION.DATA)
+        crt assertionError->getMessage()
+    end
+
+end

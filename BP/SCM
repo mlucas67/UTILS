@@ -1,0 +1,7 @@
+$catalog scm global
+program scm
+
+    cmd = @sentence
+    
+
+end

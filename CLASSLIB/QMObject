@@ -1,0 +1,30 @@
+$catalog QMObject global
+class QMObject
+
+    private guid
+    
+    public sub create.object()
+        ***
+        * Globally Unique Identifier
+        ***
+        guid = system(1047)
+        
+        ***
+        * If guid call not supported on this system use system time of day in milliseconds.
+        ***
+        if (guid = '') then guid = system(1020)
+    end
+
+    public function getGUID()
+        return guid
+    end
+    
+    public sub undefined(method) var.args
+        crt "Undefined method " : method : " called!"
+    end
+    
+    public function undefined(method) var.args
+        crt "Undefined method " : method : " called!"
+    end
+
+end

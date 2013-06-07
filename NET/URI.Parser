@@ -1,0 +1,53 @@
+$catalog URI.Parser global
+class URI.Parser
+
+    private input
+    private requireServerAuthority
+    
+    public sub create.object(s='') var.args
+        input = s
+    end
+    
+    public sub fail(reason, p='') var.args
+        throw "URISyntaxException"
+    end
+    
+    public sub failExpecting(expected, prior='', p='')
+        if ((p = '') and (prior # '')) then 
+            p = prior
+            prior = ''
+        end
+        if (prior # '') then
+            me->fail("Expected ":expected:" following ":prior, p)
+        end else
+            me->fail("Expected ":expected, p)
+        end
+    end
+    
+    public function substring(start, finish)
+        return input[start, (finish-start+1)]
+    end
+    
+    public function charAt(p)
+        return input[p,1]
+    end
+    
+    public function at(start, finish, c)
+        if (len(c) = 1) then
+            return ((start <= finish) and (me->charAt(start) = c))
+        end
+        p = start
+        s = c
+        sn = len(s)
+        if (sn > (finish - p + 1)) then return @false
+        i = 0
+        loop
+        while (i <= sn)
+            if (me->charAt(p) # s[i,1]) then exit
+            p += 1
+            i += 1
+        repeat
+        return (i = sn)
+    end
+
+end

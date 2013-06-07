@@ -1,0 +1,83 @@
+$catalog Cradle local
+
+equ TAB to char(9)
+
+class Cradle
+   
+    private Look
+    
+    public sub create.object()
+        Look = ''
+        me->main()
+    end
+    
+    public sub Read(s)
+        input s,1:
+    end
+    
+    public sub GetChar()
+        me->Read(Look)
+    end
+    
+    public sub Error(s)
+        crt
+        crt "Error: " : s : "."
+    end
+    
+    public sub Abort(s)
+        me->Error(s)
+        stop
+    end
+    
+    public sub Expected(s)
+        me->Abort(s : " Expected")
+    end
+    
+    public sub Check(x)
+        if (Look = x) then 
+            me->GetChar() 
+        end else 
+            me->Expected(dquote(x))
+        end
+    end
+    
+    public function IsAlpha(c)
+        return alpha(c)
+    end
+    
+    public function IsDigit(c)
+        return (c and num(c))
+    end
+    
+    public function GetName()
+        if not(me->IsAlpha(Look)) then me->Expected("Name")
+        GetName = upcase(Look)
+        me->GetChar()
+        return GetName
+    end
+    
+    public function GetNum()
+        if not(me->IsDigit(Look)) then me->Expected("Integer")
+        GetNum = Look
+        me->GetChar()
+        return GetNum
+    end
+    
+    public sub Emit(s)
+        crt TAB : s :
+    end
+    
+    public sub EmitLn(s)
+        me->Emit(s)
+        crt
+    end
+    
+    public sub Init()
+        me->GetChar()
+    end
+    
+    public sub main()
+        me->Init()
+    end
+
+end

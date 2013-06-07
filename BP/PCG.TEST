@@ -1,0 +1,32 @@
+program pcg.test
+
+    crt "Create an instance of Parent!"
+    p = object("Parent")
+    crt p->getGUID()
+    crt p->hashCode()
+    
+    crt
+    crt "Create an instance of Child!"
+    c = object("Child")
+    crt c->getGUID()
+    crt c->hashCode()
+    
+    crt
+    crt "Create and instance of GrandChild!"
+    g = object("GrandChild")
+    crt g->getGUID()
+    crt g->hashCode()
+    
+    crt
+    crt "Dispose of GrandChild!"
+    g->dispose()
+    
+    crt
+    crt "Dispose of Child!"
+    c->dispose()
+    
+    crt
+    crt "Dispose of Parent!"
+    p->dispose()
+
+end

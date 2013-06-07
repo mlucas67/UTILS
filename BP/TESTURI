@@ -1,0 +1,40 @@
+program testuri
+
+    uri = object("URI")
+    uri->parse("scheme://user-info@host:port/path/to/file.html?query#fragment")
+    gosub show
+    uri->parse("http://user:password@example.com:8080/path?query=value#fragment")
+    gosub show
+    uri->parse("mailto:John.Doe@example.com")
+    gosub show
+    uri->parse("mailto:?to=addr1@an.example.com,addr2@an.example")
+    gosub show
+    uri->parse("news:comp.infosystems.www.servers.unix")
+    gosub show
+    uri->parse("tel:+1-816-555-1212")
+    gosub show
+    uri->parse("telnet://192.0.2.16:80")
+    gosub show
+    uri->parse("urn:names:specification:docbook:dtd:xml:4.1.2")
+    gosub show
+    uri->parse("192.0.2.16:8000/path")
+    gosub show
+    stop    
+    
+    local sub show
+        crt uri->url
+        crt "Scheme...: " : uri->scheme
+        crt "Authority: " : uri->authority
+        crt "User Info: " : uri->userinfo
+        crt "User.....: " : uri->user
+        crt "Password.: " : uri->password
+        crt "Host.....: " : uri->host
+        crt "Port.....: " : uri->port
+        crt "Path.....: " : uri->path
+        crt "Query....: " : uri->query
+        crt "Fragment.: " : uri->fragment
+        crt
+        return
+    end
+
+end

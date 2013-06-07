@@ -1,0 +1,19 @@
+$catalog cons local
+class cons
+
+    private car, cdr
+    
+    public sub create.object()
+        car = object("nil")
+        cdr = object("nil")
+    end
+    
+    get first(); return car; end;
+    set first(newCar); car = newCar; end;
+    
+    get rest(); return cdr; end;
+    set rest(newCdr); cdr = newCdr; end;
+    
+    get isNil(); return (car->isNil() & cdr->isNil()); end;
+
+end

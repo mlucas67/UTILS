@@ -1,0 +1,10 @@
+$catalog Test local
+$* @MyAnnotation(author="Marshall", date="04-10-2013")
+class Test
+
+    $* @MyAnnotation(author="Joe", date="05-10-2013")
+    public sub method1()
+        crt "Method 1"
+    end
+
+end

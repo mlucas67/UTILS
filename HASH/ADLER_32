@@ -1,0 +1,11 @@
+$catalog adler_32 global
+$define MOD_ADLER 65521
+function adler_32(data)
+    a = 1
+    b = 0
+    for index = 1 to len(data)
+        a = mod( (a + seq( data[index, 1] )), MOD_ADLER )
+        b = mod( (b + a), MOD_ADLER )
+    next index
+    return (b * 65536) + a
+end

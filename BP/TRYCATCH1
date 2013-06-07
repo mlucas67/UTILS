@@ -1,0 +1,11 @@
+program trycatch1
+
+    try
+        call trycatch2
+    catch "ShowMeTheMoney"
+        crt "(trycatch1 caught: ShowMeTheMoney) Now that's what I'm talking about!"
+    catch SYS$ANY
+        crt "(trycatch1 caught:" : @EXCEPTION : " via a SYS$ANY) Where'd that come from?"
+    end
+
+end

@@ -1,0 +1,32 @@
+$catalog Reader local
+class Reader
+
+    private buffer, ptr
+
+    public sub create.object(source='') var.args
+        me->setBuffer(source)
+    end
+
+    public sub setBuffer(source) var.args
+        buffer = source
+        ptr = 0
+    end
+
+    public function read()
+        ch = removef(buffer, '')
+        if (ptr < len(buffer)) then ptr += 1
+        return ch
+    end
+
+    public sub unread()
+        if (ptr > 0) then
+            ptr = ptr - 1
+            setrem ptr on buffer
+        end
+    end
+
+    public function getPtr()
+        return ptr
+    end
+
+end

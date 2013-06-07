@@ -1,0 +1,11 @@
+program testCowCorn
+
+    aFarmObject = object("Cow")
+    aFarmObject->makeNoise()
+    aFarmObject->harvest()
+    
+    aFarmObject = object("Corn")
+    aFarmObject->makeNoise()
+    aFarmObject->harvest()
+
+end

@@ -1,0 +1,41 @@
+$catalog Lexer local
+class Lexer
+
+    private buffer, lineno, reader
+    
+    public sub create.object(source='') var.args
+        me->setBuffer(source)
+    end
+    
+    public sub setBuffer(source)
+        buffer = source
+        lineno = 1
+        reader = object("Reader", buffer)
+    end
+    
+    public function getToken()
+        loop
+        while @true do
+            ch = reader->read()
+            begin case
+                case (ch = char(0))
+                    return ch
+                case (ch = @fm)
+                    lineno += 1
+                    continue
+                case (ch = ' ')
+                    continue
+                case (alpha(ch))
+                    str = ch
+                    loop
+                        ch = reader->read()
+                    while (ch matches "1Aı1N")
+                        str := ch
+                    repeat
+                    reader->unread()
+                    erturn st
+            end case
+        repeat
+    end
+
+end

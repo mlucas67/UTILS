@@ -1,0 +1,43 @@
+$catalog Token local
+class Token
+    
+    private cargo, sourceText, lineIndex, colIndex, type
+    
+    public sub create.object(startChar)
+        cargo = startChar->getCargo()
+        sourceText = startChar->getSourceText()
+        lineIndex = startChar->getLineIndex()
+        colIndex = startChar->getColIndex()
+        type = ''
+    end
+    
+    public function show(showLineNumbers='', kwargs='') var.args
+        locate "align" in kwargs<1> setting pos then
+            align = kwargs<2,pos>
+        end else
+            align = @false
+        end
+        if (align) then
+            tokenTypeLen = 12
+            space = " "
+        end else
+            tokenTypeLen = 0
+            space = ''
+        end
+        if (showLineNumbers) then
+            s = lineIndex'r#6' : colIndex'r#4' : "  "
+        end else
+            s = ''
+        end
+        mask = "l#" : tokenTypeLen
+        if (type = cargo) then
+            s := "Symbol" mask : ":" : space : type
+        end else if (type = "Whitespace") then
+            s := "Whitespace" mask : ":" : space : cargo
+        end else
+            s := type mask : ":" : space : cargo
+        end
+        return s
+    end
+    
+end

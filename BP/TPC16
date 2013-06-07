@@ -1,0 +1,7 @@
+program tpc16
+
+    GreetingString = "Turbo Pascal  Version 7.0  Copyright (c) 1983,92 Borland International"
+
+    crt GreetingString
+    CmdPtr = ''
+end

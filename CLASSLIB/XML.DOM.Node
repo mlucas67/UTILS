@@ -1,0 +1,121 @@
+$catalog XML.DOM.Node global
+class XML.DOM.Node
+
+    private baseURI, childNodes, firstChild, lastChild, localName, namespaceURI
+    private nextSibling, nodeName, nodeType, nodeValue, ownerDocument, parentNode
+    private prefix, attributes, previousSibling, textContent, text, xml
+    
+    public function getNodeName()
+    end
+    
+    public function getNodeValue()
+    end
+    
+    public sub setNodeValue(nodeValue)
+    end
+    
+    public function getNodeType()
+        return nodeType
+    end
+    
+    public function getParentNode()
+    end
+    
+    public function getChildNodes()
+    end
+    
+    public function getFirstChild()
+    end
+    
+    public function getLastChild()
+    end
+    
+    public function getPreviousSibling()
+    end
+    
+    public function getNextSibling()
+    end
+    
+    public function getAttributes()
+    end
+    
+    public function getOwnerDocument()
+    end
+    
+    public function insertBefore(newChild, refChild)
+        
+    end
+    
+    public function replaceChild(newChild, oldChild)
+    end
+    
+    public function removeChild(oldChild)
+    end
+    
+    public function appendChild(newChild)
+    end
+    
+    public function hasChildNodes()
+    end
+    
+    public function cloneNode(deep)
+    end
+    
+    public sub normalize()
+    end
+    
+    public function isSupported(feature, version)
+    end
+    
+    public function getNamespaceURI()
+    end
+    
+    public function getPrefix()
+    end
+    
+    public sub setPrefix(prefix)
+    end
+    
+    public function getLocalName()
+    end
+    
+    public function hasAttributes()
+    end
+    
+    public function getBaseURI()
+    end
+    
+    public function compareDocumentPosition(other)
+    end
+    
+    public function getTextContent()
+    end
+    
+    public sub setTextContent(textContent)
+    end
+    
+    public function isSameNode(other)
+    end
+    
+    public function lookupPrefix(namespaceURI)
+    end
+    
+    public function isDefaultNamespace(namespaceURI)
+    end
+    
+    public function lookupNamespaceURI(prefix)
+    end
+    
+    public function isEqualNode(arg)
+    end
+    
+    public function getFeature(feature, version)
+    end
+    
+    public function setUserData(key, data, handler)
+    end
+    
+    public function getUserData(key)
+    end
+    
+end

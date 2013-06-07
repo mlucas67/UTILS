@@ -1,0 +1,14 @@
+$catalog AssertionError local
+class AssertionError
+
+    private message
+    
+    public sub create.object(msg='') var.args
+        message = msg
+    end
+    
+    public function getMessage()
+        return message
+    end
+
+end

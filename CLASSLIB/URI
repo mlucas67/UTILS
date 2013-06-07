@@ -1,0 +1,55 @@
+$catalog URI global
+class URI
+
+    public url, scheme, authority, userinfo, user, password, host, port, path, query, fragment
+
+    public sub create.object(u='') var.args
+        if (u # '') then me->parse(u)
+    end
+
+    public sub init(uri)
+        url = uri
+        scheme = ''
+        authority = ''
+        userinfo = ''
+        user = ''
+        password = ''
+        host = ''
+        port = ''
+        path = ''
+        query = ''
+        fragment = ''
+    end
+
+    public sub parse(uri)
+        me->init(uri)
+        rest = url
+        if (rest = '') then return
+        fragment = matchfield(rest, "0X'#'0X", 3)
+        if (fragment) then rest = matchfield(rest, "0X'#'0X", 1)
+        query = matchfield(rest, "0X'?'0X", 3)
+        if (query) then rest = matchfield(rest, "0X'?'0X", 1)
+        scheme = matchfield(rest, "0X':'0X", 1)
+        if (scheme) then
+            if alpha(scheme) then rest = matchfield(rest, "0X':'0X", 3) else scheme = ''
+        end
+        authority = matchfield(rest, "'//'0X'/'0Xý'//'0X", 2)
+        if (authority) then
+            parts = parse(authority, "0X'@'0X':'0Xý0X'@'0Xý0X':'0Xý0X", @fm)
+            if (parts<2> = '@') then
+                userinfo = parts<1>
+                user = field(userinfo, ':', 1)
+                password = field(userinfo, ':', 2)
+                host = parts<3>
+                port = parts<5>
+            end else if (parts<2> = ':') then
+                host = parts<1>
+                port = parts<3>
+            end
+            path = rest[len(rest)-len(authority)-2]
+        end else
+            path = rest
+        end
+    end
+
+end

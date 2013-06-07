@@ -1,0 +1,18 @@
+list = object("nil")
+cons = object("cons")
+cons->first = object("atom", 42)
+list = cons
+cons = object("cons")
+cons->first = object("atom", 69)
+list->rest = cons
+last = list->rest
+cons = object("cons")
+cons->first = object("atom", 613)
+last->rest = cons
+cur = list
+loop
+while not(cur->isNil())
+    crt cur->first()->data()
+    cur = cur->rest()
+repeat
+end

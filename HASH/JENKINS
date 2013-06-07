@@ -1,0 +1,15 @@
+$catalog qm.hash.jenkins global
+function qm.hash.jenkins(key, length)
+
+    jenkins = 0
+    for i = 1 to length
+        jenkins += seq(key[i, 1])
+        jenkins += (jenkins * 1024)
+        jenkins = bitxor(jenkins, int(jenkins / 64))
+    next i
+    jenkins += (jenkins * 8)
+    jenkins = bitxor(jenkins, int(jenkins / 2048))
+    jenkins += (jenkins * 32768)
+    return jenkins
+    
+end

@@ -1,0 +1,33 @@
+program test.scanner
+
+    sourceText = "/* PROGRAM NAME: nxx1.txt"
+    sourceText<-1> = ''
+    sourceText<-1> = "nxx is a simple programming language that provides:"
+    sourceText<-1> = " numbers"
+    sourceText<-1> = " strings"
+    sourceText<-1> = " assignment statements"
+    sourceText<-1> = " string concatenation"
+    sourceText<-1> = " simple arithmetic operations"
+    sourceText<-1> = " print capability"
+    sourceText<-1> = ''
+    sourceText<-1> = "comments may be enclosed in slash+asterisk .. asterisk+slash"
+    sourceText<-1> = "*/"
+    sourceText<-1> = "alpha = 16 ;"
+    sourceText<-1> = "beta = 2   ;"
+    sourceText<-1> = \resultName = "delta" ;\
+    sourceText<-1> = \delta = alpha / beta ;\
+    sourceText<-1> = \print "Value of " || resultName || " is: " ;\
+    sourceText<-1> = \print delta ;\
+    sourceText<-1> = 'print "\n" ;'
+    scanner = object("Scanner", sourceText)
+    crt "Here are the characters returned by the scanner:"
+    crt "  line col  character"
+    character = scanner->get()
+    loop
+    while @true
+        crt character->toString()
+        if (character->toString()[3] = "eof") then exit
+        character = scanner->get()
+    repeat
+
+end

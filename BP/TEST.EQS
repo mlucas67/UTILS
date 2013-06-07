@@ -1,0 +1,2 @@
+crt eqs("aýbýcýdýe", "c")
+crt eqs("aýbýcýdýe", reuse("c"))

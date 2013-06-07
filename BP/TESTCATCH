@@ -1,0 +1,90 @@
+program testcatch
+    include syscom keys.h
+    
+    for i = 1 to 23
+        crt "Try #" : i
+        gosub nextTry(i)
+        crt
+    next i
+    stop
+
+    local subroutine nextTry(which)
+        try
+            begin case
+                case (which = 1) ;* SYS.ABORT
+                    abort "CatchMeIfYouCan"
+                case (which = 2) ;* SYS.PROGRAM.DATATYPE.ECS_CHAR
+                case (which = 3) ;* SYS.PROGRAM.DATATYPE.INVALID
+                case (which = 4) ;* SYS.PROGRAM.DATATYPE.INVALID_SOCKET
+                    skt = open.socket("162.58.102.255", 80, SKT$STREAM + SKT$TCP + SKT$NON.BLOCKING, 1000)
+                    if (status()) then 
+                        call !errtext(text, status())
+                        crt status() : " " : text : ": opening socket!"
+                        stop
+                    end
+                    n = read.socket(skt, 100, SKT$NON.BLOCKING, 1000)
+                    if (status()) then 
+                        call !errtext(text, status())
+                        crt status() : " " : text : ": reading the socket!"
+                        stop
+                    end
+                    close.socket skt
+                case (which = 5) ;* SYS.PROGRAM.DATATYPE.NOT_FILE
+                    filevar = "This ain't no stinkin' file variable"
+                    read tst from filevar, 1 else stop 202, "1"
+                case (which = 6) ;* SYS.PROGRAM.DATATYPE.NOT_IMAGE
+                    image = "This ain't no stinkin' screen image"
+                    restore.screen image, @true
+                case (which = 7) ;* SYS.PROGRAM.DATATYPE.NOT_MATRIX
+                    
+                case (which = 8) ;* SYS.PROGRAM.DATATYPE.NOT_NUMERIC
+                    a = "This ain't no stinkin' number"
+                    b = 2
+                    c = a + b
+                case (which = 9) ;* SYS.PROGRAM.DATATYPE.NOT_OBJECT
+                    notObject = "This ain't no stinkin' object"
+                    crt objinfo(notObject, 2)
+                case (which = 10) ;* SYS.PROGRAM.DATATYPE.NOT_SEQ_FILE
+                case (which = 11) ;* SYS.PROGRAM.DATATYPE.NOT_SOCKET
+                    close.socket skt
+                case (which = 12) ;* SYS.PROGRAM.DATATYPE.NULL_STRING
+                case (which = 13) ;* SYS.PROGRAM.DATATYPE.UNASSIGNED
+                    x = y * z + unassvar
+                case (which = 14) ;* SYS.PROGRAM.DIV_ZERO
+                    a = 0
+                    b = 1
+                    c = b / a
+                case (which = 15) ;* SYS.PROGRAM.INVALID_ARGCT
+                    call !abspath("notapath", "notadir", "notafile", "extraparam")
+                case (which = 16) ;* SYS.PROGRAM.INVALID_CALL_NAME
+                    call notasub("notaparam")
+                case (which = 17) ;* SYS.PROGRAM.INVALID_DATA_SIZE
+                case (which = 18) ;* SYS.PROGRAM.INVALID_IN_TXN
+                case (which = 19) ;* SYS.PROGRAM.INVALID_ITYPE
+                case (which = 20) ;* SYS.PROGRAM.INVALID_KEY
+                case (which = 21) ;* SYS.PROGRAM.INVALID_MATRIX_INDEX
+                    dim arr(10)
+                    arr(11) = "a"
+                case (which = 22) ;* SYS.PROGRAM.INVALID_MATRIX_SIZE
+                    dim arr(-1)
+                case (which = 23) ;* SYS.PROGRAM.INVALID_OBJECT_REFERENCE
+                    notObject = "This ain't no stinkin' object"
+                    notObject->notMethod()
+            end case
+        catch SYS.ABORT
+            gosub showException()
+        catch SYS$ANY
+            gosub showException()
+        end
+        return
+    end
+
+    local subroutine showException()
+        crt "Caught " : 
+        crt @EXCEPTION : ": " :
+        crt @EXCEPTION.DATA
+        if (@ABORT.MESSAGE # '') then crt "Abort message = " : @ABORT.MESSAGE
+        return
+    end    
+    
+end

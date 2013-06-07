@@ -1,0 +1,15 @@
+Keywords = "ifýthenýelseýelifýendifýwhileýloopýendloopýprintýreturnýexit"
+OneCharacterSymbols = "=ý(ý)ý<ý>ý/ý*ý+ý-ý!ý&ý.ý;"
+TwoCharacterSymbols = "==ý<=ý>=ý<>ý!=ý++ý**ý--ý+=ý-=ý||"
+IDENTIFIER_STARTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+IDENTIFIER_CHARS = IDENTIFIER_STARTCHARS : "_"
+NUMBER_STARTCHARS = "0123456789"
+NUMBER_CHARS = NUMBER_STARTCHARS : "."
+STRING_STARTCHARS = \'"\
+WHITESPACE_CHARS = " " : char(9) : @fm
+STRING = "String"
+IDENTIFIER = "Identifier"
+NUMBER = "Number"
+WHITESPACE = "Whitespace"
+COMMENT = "Comment"
+EOF = "eof"

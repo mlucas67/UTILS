@@ -1,0 +1,14 @@
+program testarr
+
+    i = 1
+    f = 2.4
+    s = "String"
+    open "BP" to a else stop
+    o = object("QMObject")
+    
+    crt vartype(i)
+    crt vartype(f)
+    crt vartype(s)
+    crt vartype(a)
+    crt vartype(o)
+end

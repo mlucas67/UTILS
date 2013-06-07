@@ -1,0 +1,44 @@
+$catalog XML.DOM.ExceptionCodes global
+class XML.DOM.ExceptionCodes
+
+    get INDEX_SIZE_ERR(); return 1; end;
+    get DOMSTRING_SIZE_ERR(); return 2; end;
+    get HIERARCHY_REQUEST_ERR(); return 3; end;
+    get WRONG_DOCUMENT_ERR(); return 4; end;
+    get INVALID_CHARACTER_ERR(); return 5; end;
+    get NO_DATA_ALLOWED_ERR(); return 6; end;
+    get NO_MODIFICATION_ALLOWED_ERR(); return 7; end;
+    get NOT_FOUND_ERR(); return 8; end;
+    get NOT_SUPPORTED_ERR(); return 9; end;
+    get INUSE_ATTRIBUTE_ERR(); return 10; end;
+    
+    **
+    * Level 2
+    **
+    get INVALID_STATE_ERR(); return 11; end;
+    get SYNTAX_ERR(); return 12; end;
+    get INVALID_MODIFICATION_ERR(); return 13; end;
+    get NAMESPACE_ERR(); return 14; end;
+    get INVALID_ACCESS_ERR(); return 15; end;
+    
+    get ExceptionMessage(message)
+        begin case
+            case (message = 1); return "Index size error";
+            case (message = 2); return "DOMString size error";
+            case (message = 3); return "Hierarchy request error";
+            case (message = 4); return "Wrong document";
+            case (message = 5); return "Invalid character";
+            case (message = 6); return "No data allowed";
+            case (message = 7); return "No modification allowed";
+            case (message = 8); return "Not found";
+            case (message = 9); return "Not supported";
+            case (message = 10); return "Attribute in use";
+            case (message = 11); return "Invalid state";
+            case (message = 12); return "Syntax error";
+            case (message = 13); return "Invalid modification";
+            case (message = 14); return "Invalid namespace";
+            case (message = 15); return "Invalid access";
+        end case
+    end
+
+end

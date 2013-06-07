@@ -1,0 +1,6 @@
+$catalog nil local
+class nil
+
+    get isNil(); return @true; end;
+
+end

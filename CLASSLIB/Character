@@ -1,0 +1,35 @@
+$catalog Character local
+class Character
+
+    private cargo, sourceIndex, lineIndex, colIndex, sourceText
+    
+    public sub create.object(c, li, ci, si, st)
+        cargo = c
+        sourceIndex = si
+        lineIndex = li
+        colIndex = ci
+        sourceText = st
+    end
+    
+    get getCargo(); return cargo; end
+    get getSourceText(); return sourceText; end
+    get getLineIndex(); return lineIndex; end
+    get getColIndex(); return colIndex; end
+    
+    public function toString()
+        outstr = cargo
+        begin case
+            case (cargo = ' ')
+                outstr = "   space"
+            case (cargo = @fm)
+                outstr = "   newline"
+            case (cargo = char(9))
+                outstr = "   tab"
+            case (cargo = '')
+                outstr = "   eof"
+        end case
+        outstr = lineIndex'r#6' : colIndex'r#4' : "  " : outstr
+        return outstr
+    end
+
+end

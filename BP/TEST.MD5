@@ -1,0 +1,8 @@
+program test.md5
+
+    open "TESTDATA" to f.testdata else stop 201, "TESTDATA"
+    read testdata from f.testdata, "testing_hash_functions" else stop 202, "testing_hash_functions"
+   
+    crt md5(testdata)
+        
+end

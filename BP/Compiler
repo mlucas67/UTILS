@@ -1,0 +1,12 @@
+program Compiler
+    prompt '?'
+    input tst
+    for i = 1 to len(tst)
+        data tst[i,1]
+    next i
+    data char(13)
+    prompt ''
+    echo off
+    cradle = object("Cradle")
+    echo on
+end

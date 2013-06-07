@@ -1,0 +1,7 @@
+$catalog Parent local
+class Parent inherits QMObject
+    public sub create.object()
+        me->setThis(me)
+        crt "Parent::" : me->toString()
+    end
+end

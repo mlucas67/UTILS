@@ -1,0 +1,44 @@
+$catalog URL global
+class URL
+
+    private protocol, host, port, file, query, authority, path, userInfo, ref, hostAddress
+
+    public sub create.object(url)
+        me->parseURL(url)
+    end
+
+    public sub parseURL(url)
+        parts = parse(url, "0X'#'0X", @fm)
+        *protocol = matchfield(url, "0X':'0X", 1)
+        *if (me->isValidProtocol(protocol)) then
+            *rest = matchfield(url, "0X':'0X", 3)
+            *if (downcase(protocol) = "url") then
+                *protocol = ''
+                *me->parseURL(rest)
+                *return
+            *end
+        *end else
+            *protocol = ''
+            *rest = url
+        *end
+        *if (rest matches "'//'0X") then rest = matchfield(rest, "'//'0X", 2)
+        *if (rest matches "'/'0X") then
+            *path = matchfield(rest, "0X'?'0Xý0X'#'0Xý0X", 1)
+            *rest = matchfield(rest, squote(path):"0X", 2)
+        *end else
+        *end
+    end
+
+    public function isValidProtocol(protocol)
+        if (len(protocol) < 1) then return @false
+        if not(protocol matches "1A0X") then return @false
+        temp = oconv(protocol, "MC/AN")
+        temp = convert('.', ' ', temp)
+        temp = convert('+', ' ', temp)
+        temp = convert('-', ' ', temp)
+        temp = trim(temp)
+        if (temp # '') then return @false
+        return @true
+    end
+
+end

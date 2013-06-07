@@ -1,0 +1,15 @@
+program test.URI
+
+    crt "Enter URI " :; input value
+    uri = object("URI", value)
+    crt uri->getScheme()
+    crt uri->getSchemeSpecificPart()
+    crt "   " : uri->getAuthority()
+    crt "      " : uri->getUserInfo()
+    crt "      " : uri->getHost()
+    crt "      " : uri->getPort()
+    crt "   " : uri->getPath()
+    crt "   " : uri->getQuery()
+    crt "   " : uri->getFragment()
+
+end

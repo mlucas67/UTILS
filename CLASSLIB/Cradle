@@ -1,0 +1,205 @@
+$catalog Cradle local
+
+equ TAB to char(9)
+equ CR to char(13)
+
+class Cradle
+   
+    private Look
+    
+    public sub create.object()
+        Look = ''
+        me->main()
+    end
+    
+    public sub Read(s)
+        input s,1:
+    end
+    
+    public sub GetChar()
+        me->Read(Look)
+    end
+    
+    public sub Error(s)
+        crt
+        crt "Error: " : s : "."
+    end
+    
+    public sub Abort(s)
+        me->Error(s)
+        stop
+    end
+    
+    public sub Expected(s)
+        me->Abort(s : " Expected")
+    end
+    
+    public sub Check(x)
+        if (Look # x) then 
+            me->Expected(dquote(x))
+        end else
+            me->GetChar()
+            me->SkipWhite()
+        end
+    end
+    
+    public function IsWhite(c)
+        return (c matches "' 'ı'TAB'")
+    end
+    
+    public sub SkipWhite()
+        loop while (me->IsWhite(Look)) do
+            me->GetChar()
+        repeat
+    end
+    
+    public function IsAlNum(c)
+        return (me->IsAlpha(c) or me->IsDigit(c))
+    end
+    
+    public function IsAlpha(c)
+        return alpha(c)
+    end
+    
+    public function IsDigit(c)
+        return (c and num(c))
+    end
+    
+    public function IsAddOp(c)
+        return (c matches "'-'ı'+'")
+    end
+    
+    public function GetName()
+        Token = ''
+        if not(me->IsAlpha(Look)) then me->Expected("Name")
+        loop while (me->IsAlNum(Look)) do
+            Token := upcase(Look)
+            me->GetChar()
+        repeat
+        me->SkipWhite()
+        return Token
+    end
+    
+    public function GetNum()
+        Value = ''
+        if not(me->IsDigit(Look)) then me->Expected("Integer")
+        loop while (me->IsDigit(Look)) do
+            Value := Look
+            me->GetChar()
+        repeat
+        me->SkipWhite()
+        return Value
+    end
+    
+    public sub Emit(s)
+        crt TAB : s :
+    end
+    
+    public sub EmitLn(s)
+        me->Emit(s)
+        crt
+    end
+    
+    public sub Init()
+        me->GetChar()
+        me->SkipWhite()
+    end
+    
+    public sub Add()
+        me->Check('+')
+        me->Term()
+        me->EmitLn("ADD (SP)+,D0")
+    end
+    
+    public sub Subtract()
+        me->Check('-')
+        me->Term()
+        me->EmitLn("SUB (SP)+,D0")
+        me->EmitLn("NEG D0")
+    end
+    
+    public sub Multiply()
+        me->Check('*')
+        me->Factor()
+        me->EmitLn("MULS (SP)+,D0")
+    end
+    
+    public sub Divide()
+        me->Check('/')
+        me->Factor()
+        me->EmitLn("MOVE (SP)+,D1")
+        me->EmitLn("DIVS D1,D0")
+    end
+    
+    public sub Ident()
+        Name = me->GetName()
+        if (Look = '(') then
+            me->Check('(')
+            me->Check(')')
+            me->EmitLn("BSR " : Name)
+        end else
+            me->EmitLn("MOVE " : Name : "(PC),D0")
+        end
+    end
+    
+    public sub Factor()
+        if (Look = '(') then
+            me->Check('(')
+            me->Expression()
+            me->Check(')')
+        end else if (me->IsAlpha(Look)) then
+            me->Ident()
+        end else
+            me->EmitLn("MOVE #" : me->GetNum() : ",D0")
+        end
+    end
+    
+    public sub Term()
+        me->Factor()
+        loop while (Look matches "'*'ı'/'") do
+            me->EmitLn("MOVE D0,-(SP)")
+            begin case
+                case (Look = '*')
+                    me->Multiply()
+                case (Look = '/')
+                    me->Divide()
+                case 1
+                    me->Expected("Mulop")
+            end case
+        repeat
+    end
+    
+    public sub Assignment()
+        Name = me->GetName()
+        me->Check("=")
+        me->Expression()
+        me->EmitLn("LEA " : Name : "(PC),A0")
+        me->EmitLn("MOVE D0,(A0)")
+    end
+    
+    public sub Expression()
+        if (me->IsAddOp(Look)) then
+            me->EmitLn("CLR D0")
+        end else
+            me->Term()
+        end
+        loop while me->IsAddOp(Look) do
+            me->EmitLn("MOVE D0,-(SP)")
+            begin case
+                case (Look = '+')
+                    me->Add()
+                case (Look = '-')
+                    me->Subtract()
+                case 1
+                    me->Expected("Addop")
+            end case
+        repeat
+    end
+    
+    public sub main()
+        me->Init()
+        me->Assignment()
+        if (Look # CR) then me->Expected("Newline")
+    end
+
+end

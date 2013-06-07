@@ -1,0 +1,6 @@
+LIST = 'Blue':@FM:'Green':@FM:'Red'
+CALL !PICKLIST(ITEM, LIST, 1, 1)
+DISPLAY 'Selected item was ' : ITEM
+POS = 0
+CALL !PICK(ITEM, 2, LIST, "SELECT ONE", POS)
+end

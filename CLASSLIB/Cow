@@ -1,0 +1,8 @@
+$catalog Cow local
+class Cow inherits QMObject
+
+    public sub makeNoise()
+        crt "Moo!"
+    end
+
+end

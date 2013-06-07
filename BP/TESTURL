@@ -1,0 +1,38 @@
+program testurl
+
+    maxurl = "scheme://user-info@host:port/path/to/file?query#fragment"
+    gosub parse(maxurl)
+    minurl = "/path/to/file"
+    gosub parse(minurl)
+    simpurl = "scheme://host/path"
+    gosub parse(simpurl) 
+    url1 = "docs/guide/collections/designfaq.html#28"
+    gosub parse(url1)
+    url2 = "http://java.sun.com/j2se/1.3/docs/guide/collections/designfaq.html#28"
+    gosub parse(url2)
+    url3 = "../../../demo/jfc/SwingSet2/src/SwingSet2.java"
+    gosub parse(url3)
+    url4 = "http://www.example.com:8080/index.html#name"
+    gosub parse(url4)
+    stop
+    
+    local sub parse(url)
+        crt url
+        parts = parse(url, "0X'#'0Xý0X", @fm)
+        crt parts
+        parts<1> = parse(parts<1>, "0X'?'0Xý0X", @fm)
+        crt parts
+        parts<1> = parse(parts<1>, "0X'//'0X'/'0Xý0X'/'0Xý0X", @fm)
+        crt parts
+        if (parts<2> = "//") then
+            parts<3> = parse(parts<3>, "0X'@'0X':'0Xý0X'@'0Xý0X':'0Xý0X", @vm)
+        end else if (parts<1> # '/') then
+            parts<1> = parse(parts<1>, "0X'@'0X':'0Xý0X'@'0Xý0X':'0Xý0X", @vm)
+        end
+        crt parts
+        parts<1> = parse(parts<1>, "0X':'ý0X", @fm)
+        crt parts
+        return
+    end
+
+end

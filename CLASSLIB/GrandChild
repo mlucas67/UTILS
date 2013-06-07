@@ -1,0 +1,7 @@
+$catalog GrandChild local
+class GrandChild inherits Parent, Child
+    public sub create.object()
+        me->setThis(me)
+        crt "GrandChild::" : me->toString()
+    end
+end

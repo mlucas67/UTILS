@@ -1,0 +1,30 @@
+$catalog Scanner local
+class Scanner
+
+    private sourceText, lastIndex, sourceIndex, lineIndex, colIndex
+    
+    public sub create.object(source)
+        sourceText = source
+        lastIndex = len(sourceText)
+        sourceIndex = 0
+        lineIndex = 1
+        colIndex = 0
+    end
+    
+    public function get()
+        sourceIndex += 1
+        if (sourceIndex > 1) then
+            if (sourceText[sourceIndex-1,1] = @fm) then
+                lineIndex += 1
+                colIndex = 0
+            end
+        end
+        colIndex += 1
+        if (sourceIndex > lastIndex) then
+            return object("Character", '', lineIndex, colIndex, sourceIndex, sourceText)
+        end else
+            return object("Character", sourceText[sourceIndex, 1], lineIndex, colIndex, sourceIndex, sourceText)
+        end
+    end
+
+end

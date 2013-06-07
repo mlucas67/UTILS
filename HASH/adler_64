@@ -1,0 +1,14 @@
+$catalog adler_64 global
+$define CRC_BASE 4294967291
+function adler_64(data)
+    a = 1
+    b = 0
+    for index = 1 to len(data)
+        a = a + seq( data[index, 1] )
+        if (a > CRC_BASE) then a = a - CRC_BASE
+        b = b + a
+        if (b > CRC_BASE) then b = b - CRC_BASE
+    next index
+    hex = dtx(b)'r%8' : dtx(a)'r%8'
+    return hex
+end

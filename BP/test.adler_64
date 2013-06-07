@@ -1,0 +1,9 @@
+program test.adler_64
+
+    $include hash functions.h
+    
+    data = "Wikipedia"
+    adler = adler_64(data)
+    crt adler
+    
+end

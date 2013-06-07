@@ -1,0 +1,31 @@
+program test.jenkins
+
+    $include hash functions.h
+
+    open "TESTDATA" to f.testdata else stop 201, "TESTDATA"
+    read testdata from f.testdata, "testing_hash_functions" else stop 202, "testing_hash_functions"
+
+    value = jenkins(testdata, len(testdata))
+    crt value : " - " : oconv(int(value/4294967296), "MCDX")'r%8' : oconv((value-4294967296), "MCDX")'r%8'
+
+    *hashtable = ''
+    *collisions = 0
+    *for i = 1 to dcount(testdata, @fm)
+        *datum = testdata<i>
+        *for j = 1 to dcount(datum, ' ')
+            *data = field(datum, ' ', j)
+            *fletcher = fletcher_64(data)
+            *locate fletcher in hashtable<1,1> by "ar" setting pos then
+                *if (hashtable<2,pos> # data) then
+                    *crt "collision! " : data : " with " : hashtable<2,pos>
+                    *collisions += 1
+                *end
+            *end else
+                *hashtable = insert(hashtable, 1, pos; fletcher)
+                *hashtable = insert(hashtable, 2, pos; data)
+            *end
+            *crt fletcher : "  " : data
+        *next j
+    *next i
+    
+end

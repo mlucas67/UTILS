@@ -1,0 +1,114 @@
+$catalog URI global
+class URI
+
+    ** Components of all URIs: [<scheme>:]<scheme-specific-part>[#<fragment>]
+    private scheme, fragment
+    
+    ** Hierarchical URI components: [//<authority>]<path>[?<query>]
+    private authority
+    
+    ** Server-based authority: [<userInfo>@]<host>[:<port>]
+    private userInfo, host, port
+    
+    ** Remaining components of heirarchical URIs
+    private path, query
+    
+    ** The remaining fields may be computed on demand
+    private schemeSpecificPart, hash
+    private decodedUserInfo, decodedAuthority, decodedPath, decodedQuery
+    private decodedFragment, decodedSchemeSpecificPart
+    
+    ** The string form of this URI.
+    private string
+    
+    public sub create.object(str='') var.args
+        scheme = ''
+        fragment = ''
+        authority = ''
+        userInfo = ''
+        host = ''
+        port = -1
+        path = ''
+        query = ''
+        schemeSpecificPart = ''
+        hash = 0
+        decodedUserInfo = ''
+        decodedAuthority = ''
+        decodedPath = ''
+        decodedQuery = ''
+        decodedFragment = ''
+        decodedSchemeSpecificPart = ''
+        string = str
+        if (string # '') then
+            me->parse()
+        end
+    end
+    
+    public sub parse()
+        parts = parse(string, "0X'#'0Xý0X", @fm)
+        if (parts<2> = '#') then
+            frontpart = parts<1>
+            fragment = parts<3>
+        end else
+            frontpart = string
+        end
+        parts = parse(frontpart, "0X':''//'0Xý0X':'0Xý0X", @fm)
+        if (parts<2> = ':') then
+            scheme = parts<1>
+            if (parts<3> = '//') then
+                schemeSpecificPart = parts<3> : parts<4>
+            end else
+                schemeSpecificPart = parts<3>
+            end
+        end else
+            schemeSpecificPart = frontpart
+        end
+        parts = parse(schemeSpecificPart, "'//'0X'/'0X'?'0Xý'//'0X'/'0Xý'//'0X'?'0Xý0X'?'0Xý0X", @fm)
+        if (parts<1> = '//') then
+            authority = parts<2>
+            if (parts<3> = '/') then
+                path = parts<4>
+                if (parts<5> = '?') then
+                    query = parts<6>
+                end
+            end else
+                if (parts<3> = '?') then
+                    query = parts<4>
+                end
+            end
+        end else
+            path = parts<2>
+            if (parts<3> = '?') then
+                query = parts<4>
+            end
+        end
+        if (authority # '') then
+            parts = parse(authority, "0X'@'0X':'0Xý0X'@'0Xý0X':'0Xý0X", @fm)
+            if (parts<2> = '@') then
+                userInfo = parts<1>
+                host = parts<3>
+                if (parts<4> = ':') then
+                    port = parts<5>
+                end
+            end else
+                if (parts<2> = ':') then
+                    host = parts<1>
+                    port = parts<3>
+                end else
+                    host = authority
+                end
+            end
+        end
+    end
+    
+    public function getScheme(); return scheme; end;
+    public function getFragment; return fragment; end;
+    public function getAuthority; return authority; end;
+    public function getUserInfo; return userInfo; end;
+    public function getHost; return host; end;
+    public function getPort; return port; end;
+    public function getPath; return path; end;
+    public function getQuery; return query; end;
+    public function getSchemeSpecificPart; return schemeSpecificPart; end;
+
+end

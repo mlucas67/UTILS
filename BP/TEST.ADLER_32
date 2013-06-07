@@ -1,0 +1,9 @@
+program test.adler_32
+
+    $include hash functions.h
+    
+    data = "Wikipedia"
+    adler = adler_32(data)
+    crt adler : " = " : dtx(adler)'r%8'
+    
+end

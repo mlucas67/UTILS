@@ -1,0 +1,6 @@
+$catalog trycatch3 local
+subroutine trycatch3
+
+    throw "ShowMeTheMoney"
+
+end

@@ -1,0 +1,5 @@
+$catalog QM.utils.className global
+deffun isObject(obj) calling "QM.utils.isObject"
+function QM.utils.className(obj)
+    return if (isObject(obj)) then objinfo(obj, 1) else ''
+end

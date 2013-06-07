@@ -1,0 +1,4 @@
+$catalog QM.utils.isObject global
+function QM.utils.isObject(obj)
+    return objinfo(obj, 0)
+end

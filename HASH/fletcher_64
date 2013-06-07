@@ -1,0 +1,14 @@
+$catalog fletcher_64 global
+$define CRC_BASE 4294967291
+function fletcher_64(data)
+    a = 1
+    b = 0
+    for index = 1 to len(data) step 4
+        a = a + (seq( data[index, 1] ) * 16777216) + (seq( data[index+1, 1] ) * 65536) + (seq( data[index+2, 1] ) * 256) + seq( data[index+4, 1] )
+        if (a > CRC_BASE) then a = a - CRC_BASE
+        b = b + a
+        if (b > CRC_BASE) then b = b - CRC_BASE
+    next index
+    hex = oconv(b, "MCDX")'r%8' : oconv(a, "MCDX")'r%8'
+    return hex
+end

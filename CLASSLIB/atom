@@ -1,0 +1,15 @@
+$catalog atom local
+class atom
+
+    private data
+    
+    public sub create.object(newData='') var.args
+        data = newData
+    end
+    
+    get data(); return data; end;
+    set data(newData); data = newData; end;
+    
+    get isNil(); return (data # ''); end;
+
+end

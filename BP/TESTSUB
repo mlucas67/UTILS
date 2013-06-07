@@ -1,0 +1,5 @@
+$catalog testsub local
+sub testsub(a, b)
+    abort "launch"
+    return
+end

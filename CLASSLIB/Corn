@@ -1,0 +1,8 @@
+$catalog Corn local
+class Corn inherits QMObject
+
+    public sub harvest()
+        crt "You pick some corn!"
+    end
+
+end
