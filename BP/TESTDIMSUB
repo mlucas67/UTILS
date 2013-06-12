@@ -1,0 +1,10 @@
+$catalog testdimsub local
+sub testdimsub(mat matrix)
+    redim matrix(2, 5)
+    for i = 1 to 2
+        for j = 1 to 5
+            crt i : ", " : j : " " : matrix(i, j)
+        next j
+    next i
+    return
+end

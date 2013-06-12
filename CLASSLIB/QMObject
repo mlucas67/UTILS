@@ -19,6 +19,10 @@ class QMObject
         return guid
     end
     
+    public function same(obj)
+        return if (objinfo(obj,0)) then (obj->getGUID() = me->getGUID()) else @false
+    end
+    
     public sub undefined(method) var.args
         crt "Undefined method " : method : " called!"
     end

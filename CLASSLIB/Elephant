@@ -1,0 +1,14 @@
+$catalog Elephant local
+class Elephant
+
+    private info
+    
+    public sub create.object(newInfo='') var.args
+        info = newInfo
+    end
+    
+    public sub showInfo()
+        crt info
+    end
+
+end

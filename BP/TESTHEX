@@ -1,0 +1,8 @@
+program testhex
+
+    val = 0x88fc48be
+    crt val
+    crt val / pwr(2, 12)
+    crt shift(val, 12)
+    
+end

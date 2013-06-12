@@ -1,0 +1,6 @@
+program testfindprog
+    
+    call !findprog(result, "Person")
+    crt result
+
+end

@@ -1,0 +1,50 @@
+$catalog MetaData local
+class MetaData
+
+    private names, attrs, values
+    
+    public sub create.object()
+        names = ''
+        attrs = ''
+        values = ''
+    end
+    
+    public sub add(tag)
+        name = field(tag, "(", 1)
+        locate name in names<1> setting namePos else
+            namePos = dcount(name, @fm) + 1
+            names = insert(names, namePos; name)
+            attrs = insert(attrs, namePos; "")
+            values = insert(values, namePos; "")
+        end
+        attrList = field(field(tag, "(", 2), ")", 1)
+        loop
+            attr = removef(attrList, ",")
+        until status()
+            attrName = trim(field(attr, "=", 1))
+            attrValue = trim(field(attr, "=", 2))
+            if (attrValue[1,1] = '"') then attrValue = field(attrValue, '"', 2)
+            locate attrName in attrs<namePos,1> setting attrPos then
+                valPos = dcount(values<namePos, attrPos>, @svm) + 1
+            end else
+                attrPos = dcount(attrs<namePos>, @vm) + 1
+                attrs = insert(attrs, namePos, attrPos; attrName)
+                valPos = 1
+            end
+            values = insert(values, namePos, attrPos, valPos; attrValue)
+        repeat
+    end
+    
+    public function get(name, attr)
+        locate name in names<1> by "al" setting namePos else return ''
+        locate attr in attrs<namePos, 1> by "al" setting attrPos else return ''
+        return values<namePos, attrPos>
+    end
+    
+    public sub dump()
+        crt names
+        crt attrs
+        crt values
+    end
+
+end

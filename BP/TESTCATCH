@@ -1,7 +1,9 @@
 program testcatch
     include syscom keys.h
     
-    for i = 1 to 23
+    depth = 0
+    
+    for i = 1 to 65
         crt "Try #" : i
         gosub nextTry(i)
         crt
@@ -13,66 +15,101 @@ program testcatch
             begin case
                 case (which = 1) ;* SYS.ABORT
                     abort "CatchMeIfYouCan"
-                case (which = 2) ;* SYS.PROGRAM.DATATYPE.ECS_CHAR
-                case (which = 3) ;* SYS.PROGRAM.DATATYPE.INVALID
-                case (which = 4) ;* SYS.PROGRAM.DATATYPE.INVALID_SOCKET
-                    skt = open.socket("162.58.102.255", 80, SKT$STREAM + SKT$TCP + SKT$NON.BLOCKING, 1000)
-                    if (status()) then 
-                        call !errtext(text, status())
-                        crt status() : " " : text : ": opening socket!"
-                        stop
-                    end
-                    n = read.socket(skt, 100, SKT$NON.BLOCKING, 1000)
-                    if (status()) then 
-                        call !errtext(text, status())
-                        crt status() : " " : text : ": reading the socket!"
-                        stop
-                    end
-                    close.socket skt
-                case (which = 5) ;* SYS.PROGRAM.DATATYPE.NOT_FILE
+                case (which = 2) ;* SYS.EXTCALL.ABORT
+                case (which = 3) ;* SYS.EXTCALL.INVALID_ARGCT
+                case (which = 4) ;* SYS.EXTCALL.IO_ERROR
+                case (which = 5) ;* SYS.EXTCALL.SETUP_ERROR
+                case (which = 6) ;* SYS.EXTCALL.SIZE_ERROR
+                case (which = 7) ;* SYS.FILESYS.CREATION_ERROR
+                    create.file "AA:/BB/CC" directory
+                case (which = 8) ;* SYS.FILESYS.INVALID_FILE_TYPE
+                case (which = 9) ;* SYS.FILESYS.INVALID_PARTNO
+                case (which = 10) ;* SYS.FILESYS.INVALID_PATHNAME
+                case (which = 11) ;* SYS.FILESYS.INVALID_RECORD_ID
+                case (which = 12) ;* SYS.FILESYS.IO_ERROR
+                case (which = 13) ;* SYS.FILESYS.LOCK_REQUIRED
+                case (which = 14) ;* SYS.FILESYS.NOT_DISTRFL
+                case (which = 15) ;* SYS.FILESYS.OPEN_ERROR
+                case (which = 16) ;* SYS.FILESYS.PERMISSIONS.ERROR
+                case (which = 17) ;* SYS.FILESYS.PERMISSIONS.READ_ONLY
+                case (which = 18) ;* SYS.FILESYS.TRIGGER.ERROR
+                case (which = 19) ;* SYS.FILESYS.TRIGGER.INVALID_ARGCT
+                case (which = 20) ;* SYS.KERNEL.NO_MEMORY
+                case (which = 21) ;* SYS.LOCKS.DEADLOCK
+                case (which = 22) ;* SYS.LOCKS.TASK_LOCK.INVALID
+                case (which = 23) ;* SYS.PRINTER.IO_ERROR
+                case (which = 24) ;* SYS.PRINTER.INVALID_KEY
+                case (which = 25) ;* SYS.PRINTER.INVALID_OPERATION
+                case (which = 26) ;* SYS.PRINTER.INVALID_REGION
+                case (which = 27) ;* SYS.PRINTER.INVALID_UNIT
+                case (which = 28) ;* SYS.PROGRAM.DATATYPE.ECS_CHAR
+                case (which = 29) ;* SYS.PROGRAM.DATATYPE.INVALID
+                case (which = 30) ;* SYS.PROGRAM.DATATYPE.INVALID_SOCKET
+                case (which = 31) ;* SYS.PROGRAM.DATATYPE.NOT_FILE
                     filevar = "This ain't no stinkin' file variable"
                     read tst from filevar, 1 else stop 202, "1"
-                case (which = 6) ;* SYS.PROGRAM.DATATYPE.NOT_IMAGE
+                case (which = 32) ;* SYS.PROGRAM.DATATYPE.NOT_IMAGE
                     image = "This ain't no stinkin' screen image"
                     restore.screen image, @true
-                case (which = 7) ;* SYS.PROGRAM.DATATYPE.NOT_MATRIX
-                    
-                case (which = 8) ;* SYS.PROGRAM.DATATYPE.NOT_NUMERIC
+                case (which = 33) ;* SYS.PROGRAM.DATATYPE.NOT_MATRIX
+                case (which = 34) ;* SYS.PROGRAM.DATATYPE.NOT_NUMERIC
                     a = "This ain't no stinkin' number"
                     b = 2
                     c = a + b
-                case (which = 9) ;* SYS.PROGRAM.DATATYPE.NOT_OBJECT
+                case (which = 35) ;* SYS.PROGRAM.DATATYPE.NOT_OBJECT
                     notObject = "This ain't no stinkin' object"
                     crt objinfo(notObject, 2)
-                case (which = 10) ;* SYS.PROGRAM.DATATYPE.NOT_SEQ_FILE
-                case (which = 11) ;* SYS.PROGRAM.DATATYPE.NOT_SOCKET
+                case (which = 36) ;* SYS.PROGRAM.DATATYPE.NOT_SEQ_FILE
+                case (which = 37) ;* SYS.PROGRAM.DATATYPE.NOT_SOCKET
                     close.socket skt
-                case (which = 12) ;* SYS.PROGRAM.DATATYPE.NULL_STRING
-                case (which = 13) ;* SYS.PROGRAM.DATATYPE.UNASSIGNED
+                case (which = 38) ;* SYS.PROGRAM.DATATYPE.NULL_STRING
+                case (which = 39) ;* SYS.PROGRAM.DATATYPE.UNASSIGNED
                     x = y * z + unassvar
-                case (which = 14) ;* SYS.PROGRAM.DIV_ZERO
+                case (which = 40) ;* SYS.PROGRAM.DIV_ZERO
                     a = 0
                     b = 1
                     c = b / a
-                case (which = 15) ;* SYS.PROGRAM.INVALID_ARGCT
+                case (which = 41) ;* SYS.PROGRAM.INVALID_ARGCT
                     call !abspath("notapath", "notadir", "notafile", "extraparam")
-                case (which = 16) ;* SYS.PROGRAM.INVALID_CALL_NAME
+                case (which = 42) ;* SYS.PROGRAM.INVALID_CALL_NAME
                     call notasub("notaparam")
-                case (which = 17) ;* SYS.PROGRAM.INVALID_DATA_SIZE
-                case (which = 18) ;* SYS.PROGRAM.INVALID_IN_TXN
-                case (which = 19) ;* SYS.PROGRAM.INVALID_ITYPE
-                case (which = 20) ;* SYS.PROGRAM.INVALID_KEY
-                case (which = 21) ;* SYS.PROGRAM.INVALID_MATRIX_INDEX
-                    dim arr(10)
-                    arr(11) = "a"
-                case (which = 22) ;* SYS.PROGRAM.INVALID_MATRIX_SIZE
-                    dim arr(-1)
-                case (which = 23) ;* SYS.PROGRAM.INVALID_OBJECT_REFERENCE
+                case (which = 43) ;* SYS.PROGRAM.INVALID_DATA_SIZE
+                case (which = 44) ;* SYS.PROGRAM.INVALID_IN_TXN
+                case (which = 45) ;* SYS.PROGRAM.INVALID_ITYPE
+                case (which = 46) ;* SYS.PROGRAM.INVALID_KEY
+                case (which = 47) ;* SYS.PROGRAM.INVALID_MATRIX_INDEX
+                    dim arr21(10)
+                    arr21(11) = "a"
+                case (which = 48) ;* SYS.PROGRAM.INVALID_MATRIX_SIZE
+                case (which = 49) ;* SYS.PROGRAM.INVALID_OBJECT_REFERENCE
                     notObject = "This ain't no stinkin' object"
                     notObject->notMethod()
+                case (which = 50) ;* SYS.PROGRAM.LIMIT.CALL_DEPTH
+                    call testsub(2, 2)
+                case (which = 51) ;* SYS.PROGRAM.LIMIT.NUM_FILES
+                case (which = 52) ;* SYS.PROGRAM.LIMIT.GOSUB_DEPTH
+                    gosub recurs
+                case (which = 53) ;* SYS.PROGRAM.LIMIT.MAX_BREAKPOINTS
+                case (which = 54) ;* SYS.PROGRAM.LOAD_ERROR
+                case (which = 55) ;* SYS.PROGRAM.NO_PROPERTY_VALUE
+                case (which = 56) ;* SYS.PROGRAM.NOT_FOUND
+                case (which = 57) ;* SYS.PROGRAM.NOT_OBJECT
+                case (which = 58) ;* SYS.PROGRAM.NOT_TXN
+                    transaction abort
+                case (which = 59) ;* SYS.PROGRAM.RANGE
+                    dim arr59(10000000000000000000000)
+                case (which = 60) ;* SYS.PROGRAM.RESIZE_ERROR
+                    dim arr60(10)
+                    gosub resize(mat arr60)
+                case (which = 61) ;* SYS.SELECT.INVALID_LIST_NO
+                case (which = 62) ;* SYS.SHELL.EXECUTION_ERROR
+                case (which = 63) ;* SYS.SORT.INVALID_KEY_COUNT
+                case (which = 64) ;* SYS.SORT.INVALID_OPERATION
+                case (which = 65) ;* SYS.SORT.IO_ERROR
             end case
-        catch SYS.ABORT
+        catch SYS.PROGRAM.LIMIT.GOSUB_DEPTH
             gosub showException()
+            crt "Internal subroutine depth = " : depth            
         catch SYS$ANY
             gosub showException()
         end
@@ -85,6 +122,17 @@ program testcatch
         crt @EXCEPTION.DATA
         if (@ABORT.MESSAGE # '') then crt "Abort message = " : @ABORT.MESSAGE
         return
-    end    
+    end
+    
+    local subroutine recurs()
+        depth += 1
+        gosub recurs
+        return
+    end
+    
+    local subroutine resize(mat matrix)
+        dim matrix(2, 5)
+        return
+    end
     
 end

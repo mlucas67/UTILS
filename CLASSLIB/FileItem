@@ -1,0 +1,68 @@
+$catalog FileItem local
+class FileItem
+
+    private guid
+    private fileName
+    private fieldNameList
+    private fieldAttrList
+    private fieldValueList
+    private fieldSubValueList
+    private fieldNullableList
+    private fieldValidationList
+    private fieldIConvList
+    private fieldOConvList
+    private metaData
+    
+    public sub create.object(dataObject)
+        if (objinfo(dataObject, 0)) then
+            me->loadMetaData(dataObject)
+        end else
+            throw "UndefinedDataObject", dataObject
+        end
+        guid = system(1047)
+    end
+    
+    public function getGUID()
+        return guid
+    end
+    
+    public sub setGUID(value)
+        guid = value
+    end
+    
+    public sub readItem()
+    end
+    
+    public sub writeItem()
+    end
+
+    public sub loadMetaData(obj)
+        className = objinfo(obj, 1)
+        call !findprog(result, className)
+        metaData = object("MetaData")
+        skip = dcount(result<1>, @vm)
+        cnt = dcount(result<4>, @vm)
+        for i = 1 to cnt step skip
+            value = result<4, i>
+            metaData->add(value)
+            crt value
+            metaData->dump()
+        next i
+        fileName = metaData->get("File", "name")
+        fieldNameList = metaData->get("Field", "name")
+        fieldAttrList = metaData->get("Field", "attr")
+        fieldValueList = metaData->get("Field", "value")
+        fieldSubValueList = metaData->get("Field", "subvalue")
+        fieldNullableList = metaData->get("Field", "nullable")
+        fieldValidationList = metaData->get("Field", "validation")
+        fieldIConvList = metaData->get("Field", "iconv")
+        fieldOConvList = metaData->get("Field", "oconv")
+    end
+    
+    public sub dump()
+        crt "File Name  : " : fileName
+        crt "Field Names: " : fieldNameList
+        crt "Field Attrs: " : fieldAttrList
+    end
+    
+end

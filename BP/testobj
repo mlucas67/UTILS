@@ -1,0 +1,10 @@
+$catalog testobj local
+class testobj
+
+    private property
+    
+    public sub create.object()
+        property = 1
+    end
+
+end

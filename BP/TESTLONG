@@ -1,0 +1,9 @@
+program testlong
+
+    val = 2147483647
+    crt val : " " : dtx(val)
+    val = val + 1
+    crt val : " " : 
+    crt dtx(val)
+
+end

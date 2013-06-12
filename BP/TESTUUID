@@ -1,0 +1,17 @@
+program testuuid
+
+    uuid = object("UUID")
+    dim arr(100000)
+    for i = 1 to 100000
+        arr(i) = uuid->randomUUID()->toString()
+    next i
+    cnt = 0
+    for i = 1 to 100000
+        for j = (i + 1) to 100000
+            if (arr(i) = arr(j)) then crt "Collision: " : arr(i) : " @ " : i : " & " : j
+            cnt += 1
+        next j
+    next i
+    crt cnt
+    
+end

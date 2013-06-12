@@ -1,0 +1,87 @@
+$catalog Person local
+
+$* File(name = "person")
+class Person
+
+    $* Field(name = "firstName", attr = 1, nullable = @false)
+    private firstName
+    
+    $* Field(name = "lastName", attr = 2, nullable = @false)
+    private lastName
+    
+    $* Field(name = "address", attr = 3, nullable = @false)
+    private address
+    
+    $* Field(name = "city", attr = 4, value = 2)
+    private city
+    
+    $* Field(name = "state", attr = 4, value = 3)
+    private state
+    
+    $* Field(name = "postalCode", attr = 4, value = 1)
+    private postalCode
+    
+    public sub create.object()
+        FileItem = object("FileItem", me)
+        inherit FileItem
+    end
+    
+    public function getFirstName()
+        return firstName
+    end
+    
+    public sub setFirstName(value)
+        firstName = value
+    end
+    
+    public function getLastName()
+        return lastName
+    end
+    
+    public sub setLastName(value)
+        lastName = value
+    end
+    
+    public function getAddress()
+        return address
+    end
+    
+    public sub setAddress(value)
+        address = value
+    end
+    
+    public function getCity()
+        return city
+    end
+    
+    public sub setCity(value)
+        city = value
+    end
+    
+    public function getState()
+        return state
+    end
+    
+    public sub setState(value)
+        state = value
+    end
+    
+    public function getPostalCode()
+        return postalCode
+    end
+    
+    public sub setPostalCode(value)
+        postalCode = value
+    end
+    
+    public sub read(id='') var.args
+        if (id # '') then me->setGUID(id)
+        me->readItem()
+    end
+    
+    public sub write(id='') var.args
+        if (id # '') then me->setGUID(id)
+        me->writeItem()
+    end
+
+end

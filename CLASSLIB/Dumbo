@@ -1,0 +1,8 @@
+$catalog Dumbo local
+class Dumbo inherits Elephant("My name is Dumbo")
+
+    public sub create.object()
+        me->showInfo()
+    end
+
+end

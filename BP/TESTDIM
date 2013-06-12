@@ -1,0 +1,17 @@
+program testdim
+
+    dim arr(10)
+    crt change(inmat(arr), @vm, ',')
+    for i = 1 to 10
+        arr(i) = i
+    next i
+    call testdimsub(mat arr)
+    crt change(inmat(arr), @vm, ',')
+    for i = 1 to 2
+        for j = 1 to 5
+            crt arr(i, j) : " " : 
+        next j
+        crt
+    next i
+
+end

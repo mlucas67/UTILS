@@ -1,0 +1,7 @@
+program testperson
+
+    person = object("Person")
+    person->read(1)
+    person->dump()
+
+end

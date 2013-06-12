@@ -1,0 +1,13 @@
+program testguid
+
+    dim uuid(10000)
+    for i = 1 to 10000
+        uuid(i) = system(1047)
+    next i
+    for i = 1 to 10000
+        for j = (i + 1) to 10000
+            if (uuid(i) = uuid(j)) then crt "Collision: " : uuid(i) : " @ " : i : " & " : j
+        next j
+    next i
+    
+end

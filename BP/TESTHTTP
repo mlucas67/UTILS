@@ -1,0 +1,12 @@
+program testhttp
+    $include syscom keys.h
+    
+    skt = open.socket("www.python.org", 80, SKT$STREAM + SKT$TCP, 10000)
+    if (status()) then stop "Unable to open socket: " : status()
+    n = write.socket(skt, "GET / HTTP/1.0":char(13):char(10):char(13):char(10), SKT$BLOCKING, 10000)
+    if (status()) then stop "Unable to write to socket: " : status()
+    d = read.socket(skt, 1024, SKT$BLOCKING, 10000)
+    crt d
+    close.socket skt
+
+end
